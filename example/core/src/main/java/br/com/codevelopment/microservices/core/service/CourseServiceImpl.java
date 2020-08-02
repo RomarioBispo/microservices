@@ -1,10 +1,10 @@
-package br.com.codevelopment.microservices.endpoint.service;
+package br.com.codevelopment.microservices.core.service;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.codevelopment.microservices.endpoint.domain.model.Course;
-import br.com.codevelopment.microservices.endpoint.repository.CourseRepository;
+import br.com.codevelopment.microservices.common.domain.model.Course;
+import br.com.codevelopment.microservices.core.repository.CourseRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Service

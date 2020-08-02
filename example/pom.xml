@@ -76,5 +76,6 @@
 
 	<modules>
 		<module>core</module>
+		<module>common</module>
 	</modules>
 </project>
