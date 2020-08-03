@@ -1,4 +1,4 @@
-package br.com.codevelopment.microservices.endpoint.controller;
+package br.com.codevelopment.microservices.core.controller;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.codevelopment.microservices.endpoint.domain.model.Course;
-import br.com.codevelopment.microservices.endpoint.service.CourseService;
+import br.com.codevelopment.microservices.common.domain.model.Course;
+import br.com.codevelopment.microservices.core.service.CourseService;
 
 @RestController
 @RequestMapping("/api/v1/course")

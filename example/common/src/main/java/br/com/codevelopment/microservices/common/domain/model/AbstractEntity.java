@@ -1,4 +1,4 @@
-package br.com.codevelopment.microservices.endpoint.domain.model;
+package br.com.codevelopment.microservices.common.domain.model;
 
 import java.io.Serializable;
 
