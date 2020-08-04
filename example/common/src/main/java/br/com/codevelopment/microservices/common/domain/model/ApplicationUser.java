@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Course implements AbstractEntity {
+public class ApplicationUser implements AbstractEntity {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -30,11 +31,24 @@ public class Course implements AbstractEntity {
 	private Long id;
 	
 	@Column(nullable = false)
-	private String title;
+	private String username;
+	
+	@Column(nullable = false)
+	private String password;
+	
+	@Column(nullable = false)
+	private String role = "USER";
 	
 	@Override
 	public Long getId() {
 		return id;
+	}
+
+	public ApplicationUser(@NotNull ApplicationUser user) {
+		this.id = user.getId();
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		this.role = user.getRole();
 	}
 
 }
