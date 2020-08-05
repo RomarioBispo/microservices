@@ -34,6 +34,7 @@ public class ApplicationUser implements AbstractEntity {
 	private String username;
 	
 	@Column(nullable = false)
+	@ToString.Exclude
 	private String password;
 	
 	@Column(nullable = false)

@@ -12,7 +12,7 @@ import lombok.Data;
 public class JwtConfiguration {
 	private String loginUrl = "/login/**";
 	private int expiration = 3600;
-	private String key = "uUgNNocYCrPmQUgQiyVPvEum25MZ8npR";
+	private String privateKey = "uUgNNocYCrPmQUgQiyVPvEum25MZ8npR";
 	private String type = "encrypted";
 	@NestedConfigurationProperty
 	private Header header = new Header();

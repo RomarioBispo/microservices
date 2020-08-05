@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,15 +18,15 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService{
 	
-	private ApplicationUserRepository repository;
+	private final ApplicationUserRepository repository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		log.info("Searching user on database");
-		ApplicationUser user = repository.findByUserName(username);
+		ApplicationUser user = repository.findByusername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("User not found: %s", username));
 		}
@@ -66,7 +65,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		public boolean isEnabled() {
 			return true;
 		}
-		
+
 	}
 
 }

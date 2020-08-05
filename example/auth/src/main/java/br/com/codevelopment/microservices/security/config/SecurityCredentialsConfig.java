@@ -2,8 +2,8 @@ package br.com.codevelopment.microservices.security.config;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,12 +18,11 @@ import br.com.codevelopment.microservices.security.filter.JwtUserNamePasswordAut
 import lombok.RequiredArgsConstructor;
 
 @EnableWebSecurity
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter{
 	
-	private UserDetailsService service;
+	private final UserDetailsService service;
 	private final JwtConfiguration jwtConfiguration;
-	
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -36,10 +35,10 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter{
 			.exceptionHandling()
 			.authenticationEntryPoint((req, resp, e ) -> resp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
 		.and()
-			.addFilter(new JwtUserNamePasswordAuthenticationFilter())
+			.addFilter(new JwtUserNamePasswordAuthenticationFilter(authenticationManager(), jwtConfiguration))
 		.authorizeRequests()
 			.antMatchers(jwtConfiguration.getLoginUrl()).permitAll()
-			.antMatchers("/api/v1/course/admin**").hasRole("ADMIN")
+			.antMatchers("/api/v1/microservices/admin**").hasRole("ADMIN")
 			.anyRequest().authenticated();
 	}
 
@@ -47,6 +46,12 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(service).passwordEncoder(passwordEncoder());
 	}
+	
+	@Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
 	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {

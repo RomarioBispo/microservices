@@ -7,5 +7,5 @@ import br.com.codevelopment.microservices.common.domain.model.ApplicationUser;
 
 @Repository
 public interface ApplicationUserRepository extends PagingAndSortingRepository<ApplicationUser, Long> {
-	public ApplicationUser findByUserName(String username);
+	public ApplicationUser findByusername(String username);
 }
