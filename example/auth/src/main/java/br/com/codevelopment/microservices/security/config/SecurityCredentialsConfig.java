@@ -1,45 +1,38 @@
 package br.com.codevelopment.microservices.security.config;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
 
 import br.com.codevelopment.microservices.common.property.JwtConfiguration;
 import br.com.codevelopment.microservices.security.filter.JwtUserNamePasswordAuthenticationFilter;
-import lombok.RequiredArgsConstructor;
+import br.com.codevelopment.microservices.token.creator.TokenCreator;
+import br.com.codevelopment.microservices.token.security.config.SecurityTokenConfig;
 
 @EnableWebSecurity
-@RequiredArgsConstructor
-public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter{
+public class SecurityCredentialsConfig extends SecurityTokenConfig{
 	
-	private final UserDetailsService service;
-	private final JwtConfiguration jwtConfiguration;
+	private UserDetailsService service;
+	private TokenCreator tokenCreator;
 	
+	
+	public SecurityCredentialsConfig(JwtConfiguration jwtConfiguration, UserDetailsService service,
+			TokenCreator tokenCreator) {
+		super(jwtConfiguration);
+		this.service = service;
+		this.tokenCreator = tokenCreator;
+	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-		.csrf().disable()
-		.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
-		.and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and()
-			.exceptionHandling()
-			.authenticationEntryPoint((req, resp, e ) -> resp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-		.and()
-			.addFilter(new JwtUserNamePasswordAuthenticationFilter(authenticationManager(), jwtConfiguration))
-		.authorizeRequests()
-			.antMatchers(jwtConfiguration.getLoginUrl()).permitAll()
-			.antMatchers("/api/v1/microservices/admin**").hasRole("ADMIN")
-			.anyRequest().authenticated();
+			.addFilter(new JwtUserNamePasswordAuthenticationFilter(authenticationManager(),
+					jwtConfiguration, tokenCreator));
+	super.configure(http);
 	}
 
 	@Override

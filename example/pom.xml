@@ -86,6 +86,7 @@
 	<modules>
 		<module>core</module>
 		<module>common</module>
+		<module>token</module>
 	</modules>
 	
 	<dependencyManagement>
