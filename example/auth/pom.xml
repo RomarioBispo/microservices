@@ -8,13 +8,18 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>core</artifactId>
+	<artifactId>auth</artifactId>
+	<name>auth</name>
 
 	<properties>
 		<java.version>11</java.version>
 	</properties>
-	
+
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>br.com.codevelopment.microservices</groupId>
 			<artifactId>common</artifactId>
@@ -25,10 +30,15 @@
 			<artifactId>token</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
-		<finalName>core</finalName>
+		<finalName>auth</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

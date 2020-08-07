@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8083
   
 eureka:
   instance:
@@ -10,7 +10,7 @@ eureka:
     register-with-eureka: true  
 spring:
   application:
-    name: core
+    name: auth
   jpa:
     show-sql: false 
     hibernate:
@@ -26,3 +26,4 @@ spring:
 #jwt:
 #  config:
 #    type: signed    
+
