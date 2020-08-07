@@ -10,7 +10,7 @@ The clients request microservices through gateway (who redirect for appropriate 
 
 # Getting Started
 
-This project show features which a minimal API must have on my own opinion.
+This project show features which a minimal microservices architecture must have on my own opinion.
 
 ### Prerequisites
 
