@@ -28,7 +28,6 @@ public class GatewayJWTTokenAuthorizationFilter extends JwtTokenAuthorizationFil
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		String header = request.getHeader(jwtconfiguration.getHeader().getName()) == null ? "" : request.getHeader(jwtconfiguration.getHeader().getName());
-		
 		if (!header.startsWith(jwtconfiguration.getHeader().getPrefix())) {
 			filterChain.doFilter(request, response);
 			return;

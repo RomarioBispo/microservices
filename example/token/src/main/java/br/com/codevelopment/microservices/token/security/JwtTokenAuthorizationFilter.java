@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.support.RequestContext;
 
 import com.nimbusds.jwt.SignedJWT;
 
@@ -29,10 +29,9 @@ public class JwtTokenAuthorizationFilter extends OncePerRequestFilter {
 	protected final TokenConverter tokenConverter;
 	
 	@Override
-	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		String header = request.getHeader(jwtconfiguration.getHeader().getName()) == null ? "" : request.getHeader(jwtconfiguration.getHeader().getName());
-		
 		if (!header.startsWith(jwtconfiguration.getHeader().getPrefix())) {
 			filterChain.doFilter(request, response);
 			return;

@@ -18,13 +18,17 @@ zuul:
 jwt:
   config:
     login-url: /auth/login
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 60000
+#    type: signed
+#url direta
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 60000
+
+#load balancer do eureka
 ribbon:
   ConnectTimeout: 3000
   ReadTimeout: 60000
