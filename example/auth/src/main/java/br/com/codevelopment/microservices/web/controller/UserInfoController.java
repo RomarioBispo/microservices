@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.codevelopment.microservices.common.domain.model.ApplicationUser;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/user")
+@Api(value = "API to get auth user info")
 public class UserInfoController {
 	
 	@GetMapping(path = "/info", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "get a user info", produces = "user info object")
 	public ResponseEntity<ApplicationUser> getUserInfo(Principal principal) {
 		ApplicationUser user =  (ApplicationUser)((UsernamePasswordAuthenticationToken) principal).getPrincipal();
 		return new ResponseEntity<>(user, HttpStatus.OK);

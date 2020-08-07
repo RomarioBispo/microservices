@@ -29,8 +29,14 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter{
 		.and()
 		.authorizeRequests()
 			.antMatchers(jwtConfiguration.getLoginUrl()).permitAll()
+			.antMatchers("/v2/api-docs",
+                    "/configuration/ui",
+                    "/swagger-resources/**",
+                    "/configuration/security",
+                    "/swagger-ui.html",
+                    "/webjars/**").permitAll()
 			.antMatchers("/api/v1/**").hasAuthority("ADMIN")
-			.antMatchers("/auth/**").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/auth/user/info").hasAnyRole("ADMIN", "USER")
 			.anyRequest().authenticated();
 	}
 }
